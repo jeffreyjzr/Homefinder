@@ -41,6 +41,19 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				});
 			</script>
 		<!---//strat-slider---->
+		<!---strat-submit---->	
+		<script type="text/javascript" src="js/jquery.cslider.js"></script>
+			<script type="text/javascript">
+				$(function() {
+				
+					$('#da-slider').cslider({
+						autoplay	: true,
+						bgincrement	: 450
+					});
+				
+				});
+			</script>
+		<!---//strat-submit---->
 		
 </head>
 <body>
@@ -104,7 +117,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="wrap">
 			 	 <div class="content">
 		 		 </div>
-					    <form method="post" action="#">
+					    <form method="post" action="evaluate.html">
 					    	<div>
 						    	<input name="address" type="text" class="textbox" value="Please type address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Please type address';}">
 						    	<select>  
