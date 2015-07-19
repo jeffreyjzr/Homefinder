@@ -90,27 +90,27 @@
               <div class="line"></div>
               
               <div>Housing Weight (0-10)<br>
-                   <input id="Housing" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="change">
+                   <input id="housing" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
               </div>
               
               <div class="line"></div>
               <div>Mobility Weight (0-10)<br>
-                   <input id="Mobility" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
+                   <input id="mobility" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
               </div>
               
               <div class="line"></div>
               <div>Safety Weight (0-10)<br>
-                   <input id="Safety" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
+                   <input id="safety" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
               </div>
               
               <div class="line"></div>
               <div>Health & Special Services Weight (0-10)<br>
-                   <input class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
+                   <input id ="health" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
               </div>
               
               <div class="line"></div>
               <div>Disability Community Weight (0-10)<br>
-                   <input class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
+                   <input id = "community" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
               </div>
               
             </div>
@@ -132,7 +132,17 @@
     </div>
   </footer>
   <script>
-    var radarChartData = {
+    var radarChartData;
+	
+	function initRadar() {
+	    var housing = 65;
+	    var mobility = 59;
+	    var safety = 90;
+	    var health = 81;
+	    var community = 56;
+	    var total = housing+mobility+safety+health+community;
+	    document.getElementById('total_score').innerHTML='<strong>'+total+'</strong>';
+	    radarChartData = {
 		labels: ["Housing", "Mobility", "Safety", "Health & Special Services", "Disability Community"],
 		datasets: [
 			{
@@ -143,23 +153,48 @@
 				pointStrokeColor: "#fff",
 				pointHighlightFill: "#fff",
 				pointHighlightStroke: "rgba(151,187,205,1)",
-				data: [65,59,90,81,56]
+				data: [housing,mobility,safety,health,community]
 			}
 		]
-	};
+	    };
+	    window.myRadar = new Chart(document.getElementById("canvas-radar").getContext("2d")).Radar(radarChartData, {
+			responsive: true
+		});
+	    
+  	}
 	
 	function getScore() {
+	    var housing = 65*document.getElementById("housing").value;
+	    var mobility = 59*document.getElementById("mobility").value;
+	    var safety = 90*document.getElementById("safety").value;
+	    var health = 81*document.getElementById("health").value;
+	    var community = 56*document.getElementById("community").value;
+	    var total = housing+mobility+safety+health+community;
+	    document.getElementById('total_score').innerHTML='<strong>'+total+'</strong>';
+	    radarChartData = {
+		labels: ["Housing", "Mobility", "Safety", "Health & Special Services", "Disability Community"],
+		datasets: [
+			{
+				label: "Score",
+				fillColor: "rgba(151,187,205,0.2)",
+				strokeColor: "rgba(151,187,205,1)",
+				pointColor: "rgba(151,187,205,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(151,187,205,1)",
+				data: [housing,mobility,safety,health,community]
+			}
+		]
+	    };
+	    window.myRadar = new Chart(document.getElementById("canvas-radar").getContext("2d")).Radar(radarChartData, {
+			responsive: true
+		});
 	    
-    	alert(document.getElementById("Housing"));
   	}
 	
   	window.onload = function(){
 		codeAddress();
-		window.myRadar = new Chart(document.getElementById("canvas-radar").getContext("2d")).Radar(radarChartData, {
-			responsive: true
-		});
-		document.getElementById('total_score').innerHTML='<strong>98</strong>';
-		getScore()
+		initRadar();
 	}
   </script>
   <!-- / footer -->
