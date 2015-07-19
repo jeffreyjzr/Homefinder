@@ -297,7 +297,7 @@
 				.data('value', val)
 				.prop('value', val);
 			//add function by jeff
-			getScore();
+			refreshScore();
 			return false;
 			
 		},

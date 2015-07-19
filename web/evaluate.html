@@ -44,7 +44,7 @@
             		position: results[0].geometry.location 
         		}); 
             	var infowindow = new google.maps.InfoWindow({ 
-                	content: '<strong>'+total_address+'</strong><br/>'+'Latitude: '+results[0].geometry.location.lat()+'<br/>longitude: '+results[0].geometry.location.lng() 
+                	content: '<strong>'+total_address+'</strong><br/>'+'Latitude: '+results[0].geometry.location.lat()+'<br/>Longitude: '+results[0].geometry.location.lng() 
             	}); 
             	infowindow.open(map,marker); 
       		} else { 
@@ -90,27 +90,27 @@
               <div class="line"></div>
               
               <div>Housing Weight (0-10)<br>
-                   <input id="housing" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
+                   <input id="housing" class="slider" type="text" value="1" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
               </div>
               
               <div class="line"></div>
               <div>Mobility Weight (0-10)<br>
-                   <input id="mobility" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
+                   <input id="mobility" class="slider" type="text" value="1" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
               </div>
               
               <div class="line"></div>
               <div>Safety Weight (0-10)<br>
-                   <input id="safety" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
+                   <input id="safety" class="slider" type="text" value="1" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
               </div>
               
               <div class="line"></div>
               <div>Health & Special Services Weight (0-10)<br>
-                   <input id ="health" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
+                   <input id ="health" class="slider" type="text" value="1" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
               </div>
               
               <div class="line"></div>
               <div>Disability Community Weight (0-10)<br>
-                   <input id = "community" class="slider" type="text" value="" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
+                   <input id = "community" class="slider" type="text" value="1" data-slider-min="0" data-slider-max="10" data-slider-step="1" data-slider-value="1" data-slider-selection="after">
               </div>
               
             </div>
@@ -133,14 +133,20 @@
   </footer>
   <script>
     var radarChartData;
+    var housing;
+    var mobility;
+	var safety;
+	var health;
+	var community;
+	var total;
 	
 	function initRadar() {
-	    var housing = 65;
-	    var mobility = 59;
-	    var safety = 90;
-	    var health = 81;
-	    var community = 56;
-	    var total = housing+mobility+safety+health+community;
+	    housing = 65;
+	    mobility = 59;
+	    safety = 90;
+	    health = 81;
+	    community = 56;
+	    total = housing+mobility+safety+health+community;
 	    document.getElementById('total_score').innerHTML='<strong>'+total+'</strong>';
 	    radarChartData = {
 		labels: ["Housing", "Mobility", "Safety", "Health & Special Services", "Disability Community"],
@@ -163,13 +169,13 @@
 	    
   	}
 	
-	function getScore() {
-	    var housing = 65*document.getElementById("housing").value;
-	    var mobility = 59*document.getElementById("mobility").value;
-	    var safety = 90*document.getElementById("safety").value;
-	    var health = 81*document.getElementById("health").value;
-	    var community = 56*document.getElementById("community").value;
-	    var total = housing+mobility+safety+health+community;
+	function refreshScore() {
+	    housing = 65*document.getElementById("housing").value;
+	    mobility = 59*document.getElementById("mobility").value;
+	    safety = 90*document.getElementById("safety").value;
+	    health = 81*document.getElementById("health").value;
+	    community = 56*document.getElementById("community").value;
+	    total = housing+mobility+safety+health+community;
 	    document.getElementById('total_score').innerHTML='<strong>'+total+'</strong>';
 	    radarChartData = {
 		labels: ["Housing", "Mobility", "Safety", "Health & Special Services", "Disability Community"],
