@@ -14,7 +14,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <link href='http://fonts.googleapis.com/css?family=Rokkitt' rel='stylesheet' type='text/css'>
 <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
 <script src="js/jquery.min.js"></script>
- <script type="text/javascript"  src="js/menu.js"></script>
+<script type="text/javascript"  src="js/menu.js"></script>
 <!-- start top_js_button -->
 <script type="text/javascript" src="js/move-top.js"></script>
 <script type="text/javascript" src="js/easing.js"></script>
@@ -41,18 +41,26 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 				});
 			</script>
 		<!---//strat-slider---->
-		<!---strat-submit---->	
-		<script type="text/javascript" src="js/jquery.cslider.js"></script>
-			<script type="text/javascript">
-				$(function() {
-				
-					$('#da-slider').cslider({
-						autoplay	: true,
-						bgincrement	: 450
-					});
-				
-				});
-			</script>
+		<!---strat-submit---->
+		<script type="text/javascript">
+			function evalAndRedir(){
+			     var address;
+                 if(document.getElementById("address").value=="Please type address"){
+                 	address = "";
+                 }else{
+                    address = document.getElementById("address").value;
+                 }
+			     var city = document.getElementById("city");
+			     var zipcode;
+                 if(document.getElementById("zipcode").value=="Please type zipcode"){
+                 	zipcode = "";
+                 }else{
+                    zipcode = document.getElementById("zipcode").value;
+                 }
+                 window.open("evaluate.html?address=" + address+"&city="+city.value+"&zipcode="+zipcode);
+                 //location.href='evaluate.html?address='+document.forms[0].elements[0].value;
+            }
+	    </script>
 		<!---//strat-submit---->
 		
 </head>
@@ -117,14 +125,13 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		<div class="wrap">
 			 	 <div class="content">
 		 		 </div>
-					    <form method="post" action="evaluate.html">
+					    <form method="post" action="javascript:evalAndRedir();">
 					    	<div>
-						    	<input name="address" type="text" class="textbox" value="Please type address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Please type address';}">
-						    	<select>  
-                                	<option value ="1">City1</option>  
-  									<option value ="2">City2</option>  
- 									<option value="3">City3</option>  
-  									<option value="4">City4</option>  
+						    	<input id="address" name="address" type="text" class="textbox" value="Please type address" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Please type address';}">
+						    	<select id="city" name="city">
+						    	    <option value ="">City</option>
+                                	<option value ="Minneapolis">Minneapolis</option>  
+  									<option value ="Saint Paul">Saint Paul</option>
                                 </select>  
 						    	<div class="clear"> </div>
 						    </div>
@@ -132,7 +139,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 		 	 	            	<h2 class="heading1_mid">or</h2>
 		 		            </div>
 						    <div>
-						    	<input name="zipcode" type="text" class="textbox" value="Please type zipcode" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Please type zipcode';}">
+						    	<input id="zipcode" name="zipcode" type="text" class="textbox" value="Please type zipcode" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Please type zipcode';}">
 						    	 <div class="clear"> </div>
 						    </div>
 						    <div>
