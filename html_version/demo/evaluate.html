@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Home Finder</title>
+  <meta name="description" content="Home Finder">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"> 
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8"/> 
+  <link rel="stylesheet" href="css/bootstrap.css">
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <link rel="stylesheet" href="css/plugin.css">
+  <link rel="stylesheet" href="css/style_evalute.css">
+  <!--[if lt IE 9]>
+    <script src="js/ie/respond.min.js"></script>
+    <script src="js/ie/html5.js"></script>
+  <![endif]-->
+  <script src="js/querystring.js"></script>
+  <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" /> 
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyBJq8j_bjzrmK-zsOIuItyfbU-pm4BXYaU"></script> 
+  <script type="text/javascript"> 
+  	var geocoder; 
+  	var map;
+    function codeAddress() {
+    	var address=Request["address"];//get address
+		var city=Request["city"];//get city
+		var zipcode=Request["zipcode"];//get zipcode
+		var total_address = address+" "+city+" "+zipcode
+    	geocoder = new google.maps.Geocoder();
+    	var myOptions = { 
+      		zoom:15, 
+     		mapTypeId: google.maps.MapTypeId.ROADMAP 
+    	} 
+    	map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+    	geocoder.geocode( { 'address': total_address, 'region': 'us'}, function(results, status) { 
+        	if (status == google.maps.GeocoderStatus.OK) { 
+        		console.log(results[0].geometry.location) 
+        		map.setCenter(results[0].geometry.location); 
+        		this.marker = new google.maps.Marker({ 
+        			title:address, 
+            		map: map,  
+            		position: results[0].geometry.location 
+        		}); 
+            	var infowindow = new google.maps.InfoWindow({ 
+                	content: '<strong>'+total_address+'</strong><br/>'+'Latitude: '+results[0].geometry.location.lat()+'<br/>Longitude: '+results[0].geometry.location.lng() 
+            	}); 
+            	infowindow.open(map,marker); 
+      		} else { 
+        		alert("Geocode was not successful for the following reason: " + status); 
+      		} 
+    	}); 
+  	}
+</script>
+
+</head>
+<body>
+  
+  <section id="content">
+    <section class="main padder">
+      <div class="clearfix">
+        <h4>Evaluation Result</h4>
+      </div>
+        
+      <div class="row">
+        <div class="col-lg-8">
+          <section class="panel">
+            <header class="panel-heading">
+              Location
+            </header>
+            <div>
+                <div id="map_canvas" style="height:500px;width:100%"></div>
+			</div>
+          </section>
+        </div>
+        <div class="col-lg-4">
+          <section class="panel">
+            <header class="panel-heading">
+              <input id="back" name="back" type="button" value="Back" onclick = "back()">
+            </header>
+            <div class="pull-in text-center">
+              <h4>Evaluation Score:</h4>
+              <div id="total_score" class="h4 m-t-mini"><strong>0</strong></div>
+              <div class="line"></div>
+              <div class="inline">
+                <div id="canvas-holder">
+                	<canvas id="canvas-radar" width="350" height="200"/>
+		      	</div>
+              </div>
+              <div class="line"></div>
+              
+              <div><strong>Housing: 65</strong><br>
+                   Message
+              </div>
+              
+              <div class="line"></div>
+              <div><strong>Mobility: 59</strong><br>
+                   Message
+              </div>
+              
+              <div class="line"></div>
+              <div><strong>Safety: 90</strong><br>
+                   Message
+              </div>
+              
+              <div class="line"></div>
+              <div><strong>Health & Special Services: 81</strong><br>
+                   Message
+              </div>
+              
+              <div class="line"></div>
+              <div><strong>Disability Community: 56</strong><br>
+                   Message
+              </div>
+              
+            </div>
+          </section>
+        </div>
+      </div>
+    </section>
+  </section>
+  
+  <!-- footer -->
+  <footer id="footer">
+    <div class="text-center padder clearfix">
+      <p>
+        <small></small><br><br>
+      </p>
+    </div>
+  </footer>
+  <script src="js/Chart.js"></script>
+  <script>
+    var radarChartData;
+    var housing;
+    var mobility;
+	var safety;
+	var health;
+	var community;
+	var total;
+	
+	function initRadar() {
+	    housing = 65;
+	    mobility = 59;
+	    safety = 90;
+	    health = 81;
+	    community = 56;
+	    total = 0.2*housing+0.2*mobility+0.2*safety+0.2*health+0.2*community;
+	    document.getElementById('total_score').innerHTML='<strong>'+total.toFixed(1)+'</strong>';
+	    radarChartData = {
+		labels: ["Housing", "Mobility", "Safety", "Health & Special Services", "Disability Community"],
+		datasets: [
+			{
+				label: "Score",
+				fillColor: "rgba(151,187,205,0.2)",
+				strokeColor: "rgba(151,187,205,1)",
+				pointColor: "rgba(151,187,205,1)",
+				pointStrokeColor: "#fff",
+				pointHighlightFill: "#fff",
+				pointHighlightStroke: "rgba(151,187,205,1)",
+				data: [housing,mobility,safety,health,community]
+			}
+		]
+	    };
+	    window.myRadar = new Chart(document.getElementById("canvas-radar").getContext("2d")).Radar(radarChartData, {
+			responsive: true
+		});
+	    
+  	}
+	
+  	window.onload = function(){
+
+		codeAddress();
+		initRadar();
+	}
+  	
+  	function back(){
+    	window.location.href='index.html';
+    }
+  </script>
+  
+</body>
+</html>

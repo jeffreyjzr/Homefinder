@@ -1,0 +1,9 @@
+<Config>
+	<DB>
+		<Parameter name="DB_DRIVER" value="com.mysql.jdbc.Driver"></Parameter>
+		<Parameter name="DB_CONNECTION"
+			value="jdbc:mysql://localhost:3306/homefinder"></Parameter>
+		<Parameter name="DB_USER" value="root"></Parameter>
+		<Parameter name="DB_PASSWORD" value="root1986"></Parameter>
+	</DB>
+</Config>
